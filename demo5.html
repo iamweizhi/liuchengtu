@@ -1,0 +1,66 @@
+<!Doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+	<head>
+	<meta http-equiv=Content-Type content="text/html;charset=utf-8">
+	<title>用户界面配置</title>
+ 
+		<!-- 如果本文件的包与src不是在同一个目录,就要将basepath设置到src目录下 -->
+	<script type="text/javascript">
+		mxBasePath = './src';
+	</script>
+ 
+	<!-- 引入支持库文件 -->
+	<script type="text/javascript" src="./src/js/mxClient.js"></script>
+	
+	<!-- 示例代码 -->
+	<script type="text/javascript">
+		//  程序在此方法中启动 
+		function main()
+		{
+			// 检查浏览器支持
+			if (!mxClient.isBrowserSupported())
+			{
+				mxUtils.error('Browser is not supported!', 200, false);
+			}
+			else
+			{
+				// 在容器中创建图形. 
+				// 该编辑器用于创建该图的某些功能，如下拉菜单，但在这个例子中，大部分是自定义UI的部分。
+				var editor = new mxEditor();
+ 
+				// 配置用户界面, 包括右键菜单配置
+				var config = mxUtils.load('./uiconfig.xml').getDocumentElement();
+				editor.configure(config);
+ 
+				// 设置是否可建立连接
+				editor.graph.setConnectable(true);
+ 
+				// 可编辑二级菜单
+				var container = document.getElementById('toolbar');
+				var toolbar = new mxDefaultToolbar(container, editor);
+				//Use eg. mxResources.get("delete") to translate tooltip
+				toolbar.addItem("Show XML", "./images/icons48/gear.png", "myFirstAction");
+				toolbar.addItem("Delete", "./images/icons48/keys.png", "delete");
+			}
+		}
+	</script>
+</head>
+ 
+<!-- 页面载入时启动程序 -->
+<body onload="main();" style="margin:0px;">
+	<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td id="toolbar" colspan="2" height="80px" style="background:#7F7F7F;padding:10px;">
+		</td>
+	</tr>
+	<tr>
+		<td id="toolbox" valign="top" width="70px" style="min-width:70px;background:#7F7F7F;padding:12px;">
+		</td>
+		<td width="100%" style="background:url('editors/images/grid.gif');border: solid gray 1px;">
+			<div id="graph" style="overflow:auto;width:100%;height:100%;">
+			</div>
+		</td>
+	</tr>
+	</table>
+</body>
+</html>
